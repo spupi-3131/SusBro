@@ -1,0 +1,7 @@
+{
+  "name": "SusBro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
