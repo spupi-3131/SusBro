@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SUSBRO</string>
+    <string name="title_activity_main">SUSBRO</string>
+    <string name="package_name">com.susbro.game</string>
+    <string name="custom_url_scheme">com.susbro.game</string>
+</resources>

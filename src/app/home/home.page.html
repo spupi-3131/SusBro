@@ -1,21 +1,79 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Blank </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-page-header title="GAME SETUP" />
+<ion-content>
+  <main class="page-shell">
+    <ion-card>
+      <ion-card-header><ion-card-title>Theme</ion-card-title></ion-card-header>
+      <ion-card-content>
+        <ion-item class="field-item">
+          <ion-label position="stacked">Enter one theme, e.g., beach.</ion-label>
+          <ion-input [(ngModel)]="theme" placeholder="e.g., beach" maxlength="40" />
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-card>
+      <ion-card-header class="section-heading">
+        <ion-card-title>Players</ion-card-title><ion-note>{{ players.length }}/10 · MIN 4</ion-note>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          @for (player of players; track player.id; let i = $index) {
+          <ion-item class="player-row">
+            <ion-label class="number">{{ i + 1 }}</ion-label>
+            <ion-input
+              [(ngModel)]="player.name"
+              [attr.aria-label]="'Player ' + (i + 1) + ' name'"
+              [placeholder]="'Player ' + (i + 1)"
+              maxlength="24"
+            />
+            <ion-button
+              fill="clear"
+              size="small"
+              aria-label="Remove player"
+              [disabled]="players.length <= 4"
+              (click)="removePlayer(player.id)"
+              >×</ion-button
+            >
+          </ion-item>
+          }
+        </ion-list>
+        <div class="add-row">
+          <ion-input
+            [(ngModel)]="newPlayer"
+            placeholder="Enter operative alias..."
+            maxlength="24"
+            (keyup.enter)="addPlayer()"
+          />
+          <ion-button fill="outline" [disabled]="players.length >= 10 || !newPlayer.trim()" (click)="addPlayer()"
+            >Add</ion-button
+          >
+        </div>
+        @if (duplicateNames) { <ion-note color="danger">Player names must be unique.</ion-note> } @if (players.length <
+        4) { <ion-note>Add {{ 4 - players.length }} more player(s) to start.</ion-note> }
+      </ion-card-content>
+    </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
-  </div>
+    <ion-card>
+      <ion-card-header><ion-card-title>Discussion time per turn</ion-card-title></ion-card-header>
+      <ion-card-content>
+        <ion-segment [(ngModel)]="timerDuration" aria-label="Timer duration">
+          <ion-segment-button [value]="30">30s</ion-segment-button>
+          <ion-segment-button [value]="45">45s</ion-segment-button>
+          <ion-segment-button [value]="60">60s</ion-segment-button>
+        </ion-segment>
+        <p class="hint">Recommended: 45 seconds</p>
+      </ion-card-content>
+    </ion-card>
+
+    @if (loading) { <ion-note class="status-note">Finding a word…</ion-note> } @if (errorMessage) {
+    <ion-note color="danger" class="status-note">{{ errorMessage }}</ion-note>
+    <ion-button expand="block" (click)="startGame()">Try Again</ion-button>
+    }
+    <ion-button expand="block" class="primary-action" [disabled]="!canStart" (click)="startGame()"
+      >Start Game</ion-button
+    >
+    <nav class="text-links">
+      <a routerLink="/welcome">Home</a><span>·</span><a routerLink="/about">About Our Group</a>
+    </nav>
+  </main>
 </ion-content>

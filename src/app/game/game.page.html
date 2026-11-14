@@ -1,0 +1,121 @@
+<app-page-header title="WHO'S THE SPY?" />
+<ion-content>
+  @if (state) {
+  <main class="page-shell">
+    @if (state.phase === 'reveal') { @if (!roleVisible) {
+    <section class="phase-intro">
+      <p class="eyebrow">PRIVATE ROLE REVEAL</p>
+      <h1>Pass the phone to<br />{{ currentRevealPlayer.name }}</h1>
+    </section>
+    <ion-button expand="block" class="primary-action" (click)="reveal()">Reveal Role</ion-button>
+    } @else {
+    <ion-card class="role-card" [class.spy-card]="currentRevealPlayer.id === state.spyId">
+      <ion-card-header
+        ><p class="eyebrow">YOUR ROLE</p>
+        <ion-card-title
+          >{{ currentRevealPlayer.id === state.spyId ? 'You’re the spy' : 'You’re a civilian' }}</ion-card-title
+        ></ion-card-header
+      >
+      <ion-card-content>
+        @if (currentRevealPlayer.id === state.spyId) {
+        <p class="small-label">THEME</p>
+        <p class="secret-word">{{ state.settings.theme }}</p>
+        } @else {
+        <p class="small-label">SECRET WORD</p>
+        <p class="secret-word">{{ state.secretWord }}</p>
+        }
+        <p class="privacy-note">Keep your role private. Don’t give a direct answer.</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="block" class="primary-action" (click)="hideRole()">Hide Role and Pass</ion-button>
+    } } @if (state.phase === 'clues') {
+    <section class="phase-intro">
+      <p class="eyebrow">
+        TURN {{ state.turnIndex + 1 }} OF {{ state.turnOrder.length }} · CYCLE {{ state.clueCycle }}
+      </p>
+      <h1 class="active-name">{{ activePlayer.name }} <small>speaking</small></h1>
+    </section>
+    <ion-card class="timer-card"
+      ><ion-card-content
+        ><p class="small-label">TIME REMAINING</p>
+        <div class="timer">{{ clockText }}</div>
+        <p class="small-label">{{ state.settings.timerDuration }}s limit</p></ion-card-content
+      ></ion-card
+    >
+    <p class="clue-reminder">Give one clue. Don’t say the word.</p>
+    <ion-button expand="block" class="primary-action" (click)="advanceTurn()">Done (Next Turn)</ion-button>
+    @if (!state.meetingUsed) {
+    <ion-button expand="block" class="danger-action" (click)="callMeeting()">Emergency Meeting</ion-button> } } @if
+    (state.phase === 'meeting') {
+    <section class="phase-intro">
+      <p class="eyebrow danger-text">DISCUSSION PHASE</p>
+      <h1>Emergency Meeting</h1>
+    </section>
+    <ion-card class="meeting-card"
+      ><ion-card-content
+        ><p class="danger-text">TIMER PAUSED</p>
+        <p>Who is acting suspicious? Open the floor for suspects before casting private ballots.</p></ion-card-content
+      ></ion-card
+    >
+    <ion-button expand="block" class="primary-action" (click)="beginVoting()">Start Private Vote</ion-button>
+    } @if (state.phase === 'voting') {
+    <section class="phase-intro">
+      <p class="eyebrow">PRIVATE VOTE · BALLOT {{ state.voteRound }}</p>
+      <h1>Pass the phone to<br />{{ voteLocked ? 'the next player' : currentVoter.name }}</h1>
+    </section>
+    @if (voteLocked) {
+    <ion-card><ion-card-content class="locked-message">Vote locked. Pass the phone.</ion-card-content></ion-card>
+    <ion-button expand="block" class="primary-action" (click)="continueVoting()"
+      >{{ votesCount === state.players.length ? 'Reveal Outcome' : 'Continue' }}</ion-button
+    >
+    } @else {
+    <p class="muted">Choose one suspect. You cannot vote for yourself.</p>
+    <ion-radio-group [(ngModel)]="selectedTarget">
+      <ion-list>
+        @for (player of suspects; track player.id; let i = $index) {
+        <ion-item class="vote-row"
+          ><ion-radio [value]="player.id" justify="space-between"
+            ><span class="number">{{ i + 1 }}</span>{{ player.name }}</ion-radio
+          ></ion-item
+        >
+        }
+      </ion-list>
+    </ion-radio-group>
+    <ion-button expand="block" class="primary-action" [disabled]="!selectedTarget" (click)="confirmVote()"
+      >Confirm Vote</ion-button
+    >
+    } } @if (state.phase === 'guess') {
+    <section class="phase-intro">
+      <p class="eyebrow">FINAL GUESS · PRIVATE</p>
+      <h1>Pass the phone to<br />{{ guessPlayer.name }}</h1>
+    </section>
+    @if (!guessVisible) {
+    <ion-button expand="block" class="primary-action" (click)="revealGuess()">Reveal Guess Screen</ion-button>
+    } @else {
+    <ion-card
+      ><ion-card-header><ion-card-title>Spy’s final guess</ion-card-title></ion-card-header
+      ><ion-card-content
+        ><p class="muted">Enter the secret word. A correct guess wins the round for the spy.</p>
+        <ion-item class="field-item"
+          ><ion-input
+            [(ngModel)]="spyGuess"
+            placeholder="Your guess"
+            maxlength="40"
+            (keyup.enter)="submitGuess()" /></ion-item></ion-card-content
+    ></ion-card>
+    <ion-button expand="block" class="primary-action" [disabled]="!spyGuess.trim()" (click)="submitGuess()"
+      >Submit Final Guess</ion-button
+    >
+    <ion-button expand="block" fill="clear" (click)="hideGuess()">Hide Screen</ion-button>
+    } }
+  </main>
+  } @else {
+  <main class="page-shell">
+    <ion-card>
+      <ion-card-header><ion-card-title>Game session not found</ion-card-title></ion-card-header>
+      <ion-card-content>Return to setup and start a new game.</ion-card-content>
+    </ion-card>
+    <ion-button expand="block" class="primary-action" (click)="returnToSetup()">Return to Setup</ion-button>
+  </main>
+  }
+</ion-content>

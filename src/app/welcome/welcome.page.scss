@@ -1,0 +1,71 @@
+.welcome-shell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(100%, 560px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: clamp(24px, 7vw, 42px) clamp(18px, 6vw, 28px) 28px;
+}
+
+.welcome-panel {
+  padding: clamp(22px, 7vw, 36px) clamp(18px, 6vw, 30px);
+  border: 1px solid var(--sus-border);
+  border-radius: 18px;
+  background: var(--sus-panel);
+  text-align: center;
+}
+
+.brand-logo {
+  display: block;
+  width: min(54vw, 230px);
+  height: min(54vw, 230px);
+  margin: 0 auto 18px;
+  object-fit: contain;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--sus-yellow);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  margin: 0;
+  color: var(--sus-text);
+  font-size: clamp(2.25rem, 11vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+}
+
+.tagline {
+  margin: 12px 0 0;
+  color: var(--sus-muted);
+  font-size: clamp(0.9rem, 4vw, 1rem);
+  line-height: 1.5;
+}
+
+.start-button {
+  margin-top: 28px;
+  min-height: 54px;
+}
+
+.welcome-links {
+  display: flex;
+  justify-content: center;
+  padding: 18px 8px 0;
+}
+
+.welcome-links a {
+  color: var(--sus-muted);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.welcome-links a:focus-visible {
+  outline: 2px solid var(--sus-yellow);
+  outline-offset: 4px;
+}

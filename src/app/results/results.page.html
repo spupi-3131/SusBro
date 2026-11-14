@@ -1,0 +1,44 @@
+<app-page-header title="ROUND DEBRIEF" />
+<ion-content>
+  @if (state) {
+  <main class="page-shell">
+    <section class="outcome" [class.spy-wins]="state.winner === 'SPY'">
+      <p class="eyebrow">MATCH OUTCOME</p>
+      <h1>{{ state.winner === 'SPY' ? 'SPY WINS!' : 'CITIZENS WIN!' }}</h1>
+    </section>
+    <ion-card
+      ><ion-card-header><ion-card-title>Identity revealed</ion-card-title></ion-card-header
+      ><ion-card-content>
+        <div class="info-row"><span>Spy</span><strong>{{ session.player(state.spyId).name }}</strong></div>
+        <div class="info-row">
+          <span>Secret word</span><strong class="yellow-text">“{{ state.secretWord }}”</strong>
+        </div>
+        @if (state.finalGuess) {
+        <div class="info-row"><span>Spy’s final guess</span><strong>{{ state.finalGuess }}</strong></div>
+        <p class="guess-result" [class.correct]="state.guessCorrect">
+          {{ state.guessCorrect ? 'Correct guess' : 'Incorrect guess' }}
+        </p>
+        }
+      </ion-card-content></ion-card
+    >
+    <ion-card
+      ><ion-card-header><ion-card-title>Vote tally · ballot {{ state.voteRound }}</ion-card-title></ion-card-header
+      ><ion-card-content>
+        @if (tallyRows.length) { @for (row of tallyRows; track row.name) {
+        <p class="tally-row">
+          <strong>{{ row.name }}</strong><span>{{ row.count }} {{ row.count === 1 ? 'vote' : 'votes' }}</span>
+        </p>
+        } } @else {
+        <p class="muted">No votes were cast.</p>
+        }
+      </ion-card-content></ion-card
+    >
+    <ion-button expand="block" class="primary-action" (click)="playAgain()">Play Again</ion-button>
+  </main>
+  } @else {
+  <main class="page-shell">
+    <p>There is no round to show.</p>
+    <ion-button routerLink="/setup">Return to Setup</ion-button>
+  </main>
+  }
+</ion-content>

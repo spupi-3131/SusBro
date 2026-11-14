@@ -1,0 +1,23 @@
+<app-page-header title="SUSBRO" />
+<ion-content>
+  <main class="welcome-shell">
+    <section class="welcome-panel" aria-labelledby="welcome-title">
+      <img
+        class="brand-logo"
+        src="assets/images/susbro-logo.png"
+        alt="SUSBRO spy wearing a hat and sunglasses"
+        loading="lazy"
+      />
+      <p class="eyebrow">WHO'S THE SPY?</p>
+      <h1 id="welcome-title">SUSBRO</h1>
+      <p class="tagline">{{ tagline }}</p>
+      <ion-button expand="block" class="primary-action start-button" (click)="startGame()">
+        Start Game
+      </ion-button>
+    </section>
+
+    <nav class="welcome-links" aria-label="More information">
+      <a routerLink="/about">About Our Group</a>
+    </nav>
+  </main>
+</ion-content>

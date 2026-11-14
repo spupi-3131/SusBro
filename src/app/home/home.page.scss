@@ -1,27 +1,109 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+.page-shell {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(16px, 5vw, 22px) clamp(16px, 5vw, 20px) 36px;
 }
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.hint,
+ion-note {
+  color: var(--sus-muted);
 }
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+ion-card {
+  margin: 12px 0;
 }
-
-#container a {
+ion-card-header {
+  padding-bottom: 8px;
+}
+ion-card-title {
+  font-size: clamp(1rem, 4.2vw, 1.2rem);
+  font-weight: 750;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.field-item {
+  --background: var(--sus-black);
+  --border-color: var(--sus-border);
+  --border-radius: 8px;
+  --padding-start: 12px;
+}
+ion-label {
+  color: var(--sus-text);
+}
+ion-list {
+  padding: 0;
+  background: transparent;
+}
+.player-row {
+  --background: var(--sus-black);
+  --border-color: var(--sus-border);
+  --min-height: 48px;
+  margin: 5px 0;
+  border-radius: 8px;
+}
+.player-row ion-label.number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  background: #303030;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 750;
+}
+.player-row ion-input {
+  font-size: 0.9375rem;
+}
+.player-row ion-button {
+  color: var(--sus-muted);
+  font-size: 22px;
+}
+.add-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.add-row ion-input {
+  min-height: 46px;
+  --background: var(--sus-black);
+  --padding-start: 10px;
+  border: 1px solid var(--sus-border);
+  border-radius: 8px;
+}
+ion-segment {
+  --background: var(--sus-black);
+}
+ion-segment-button {
+  min-height: 42px;
+  --color: var(--sus-muted);
+  --color-checked: var(--sus-black);
+  --indicator-color: transparent;
+  --indicator-height: 0;
+}
+.hint {
+  margin: 8px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+.status-note {
+  display: block;
+  margin: 10px 4px;
+}
+.primary-action {
+  margin-top: 18px;
+}
+.text-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--sus-muted);
+  font-size: 12px;
+}
+.text-links a {
+  color: var(--sus-yellow);
   text-decoration: none;
 }
